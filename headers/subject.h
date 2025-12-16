@@ -1,15 +1,18 @@
 #pragma once 
 
 #include "list.h"
+#include <nlohmann/json.hpp>
+#include <fstream>
+#include <iostream>
+#include "str.h"
+#include <QDebug>
 
 struct Coordinates{
     double x;
     double y;
 };
 
-class String{
-    // тут будет реализация класса для строк -- потом перенесу
-};
+
 
 typedef List<Coordinates> Polygon;
 

@@ -497,24 +497,32 @@ bool Game::isRegionReachable(String regionName) const {
     List<String>& names = neighbor->get_names();
     
     // Check all names for this region
-    for (int j = 0; j < names.GetSize(); j++) {
+    bool nameFound = false;
+    for (int j = 0; j < names.GetSize() && !nameFound; j++) {
       if (names.Get(j) == regionName) {
-        // Check if not visited
-        bool wasVisited = false;
-        int visitedCount = Visited.GetSize();
-        for (int k = 0; k < visitedCount; k++) {
-          if (Visited.Get(k) == neighbor) {
-            wasVisited = true;
-            break;
-          }
-        }
-        
-        if (neighbor->is_visited()) {
+        nameFound = true;
+      }
+    }
+    
+    // If region name was found among this neighbor's names
+    if (nameFound) {
+      // Check if not visited
+      bool wasVisited = false;
+      int visitedCount = Visited.GetSize();
+      
+      for (int k = 0; k < visitedCount && !wasVisited; k++) {
+        if (Visited.Get(k) == neighbor) {
           wasVisited = true;
         }
-        
-        return !wasVisited;
       }
+      
+      // Also check AbstractSubject visited flag
+      if (neighbor->is_visited()) {
+        wasVisited = true;
+      }
+      
+      // Return true if region is reachable (not visited)
+      return !wasVisited;
     }
   }
   

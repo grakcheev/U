@@ -1,19 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Tournament VERSION 1.0.0 LANGUAGES CXX)
+project(Tournament VERSION 1.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Включить автоматическую обработку Qt
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-# Поиск Qt6
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
-# Собрать все исходные файлы
 file(GLOB SOURCES
     "*.cpp"
     "src/*.cpp"
@@ -44,8 +42,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external      # ← ВАЖНО
-    ${CMAKE_CURRENT_BINARY_DIR}               # ui_*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/external  
+    ${CMAKE_CURRENT_SOURCE_DIR}/build/Tournament_autogen/include    
+    ${CMAKE_CURRENT_BINARY_DIR}              
 )
 
 # Связать с библиотеками Qt

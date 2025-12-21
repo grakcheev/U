@@ -42,7 +42,7 @@ class SubjectRussia: public AbstractSubject{
 class Map{
    List <AbstractSubject*> subject_list;
 public:
-    void get_from_JSON(String);
+    void get_from_JSON(String, String);
     bool is_neighbours(String, String);
     List <AbstractSubject*>& get_subjects(){ return subject_list; }
 };

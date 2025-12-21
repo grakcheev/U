@@ -18,7 +18,7 @@ public:
 
     String& operator=(const String& other);
     String& operator=(const char* cstr);
-    String& operator=(String&& other) noexcept;
+    String& operator=(String&& other);
 
     int size() const;
     bool empty() const;

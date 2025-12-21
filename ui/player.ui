@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PlayerWindow</class>
- <widget class="QMainWindow" name="PlayerWindow">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Турнир Угольникова</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="regionInput">
+   <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -23,11 +23,11 @@
       <height>61</height>
      </rect>
     </property>
-    <property name="placeholderText">
+    <property name="text">
      <string>Enter your subject</string>
     </property>
    </widget>
-   <widget class="QLabel" name="currentRegionLabel">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -40,7 +40,7 @@
      <string>Current subject</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="makeMoveButton">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -53,7 +53,7 @@
      <string>MakeMove</string>
     </property>
    </widget>
-   <widget class="QLabel" name="finalRegionLabel">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>500</x>
@@ -66,7 +66,7 @@
      <string>Final subject</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="gameInfoText">
+   <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -74,9 +74,6 @@
       <width>401</width>
       <height>301</height>
      </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
     </property>
    </widget>
   </widget>

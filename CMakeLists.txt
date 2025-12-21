@@ -42,8 +42,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/external  
-    ${CMAKE_CURRENT_SOURCE_DIR}/build/Tournament_autogen/include    
+    ${CMAKE_CURRENT_SOURCE_DIR}/external    
     ${CMAKE_CURRENT_BINARY_DIR}              
 )
 

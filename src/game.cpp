@@ -52,8 +52,8 @@ int* Game::calculateDistances() {
     
     if (currentIndex != -1) {
       // Check all neighbors
-      List<AbstractSubject*> neighbors = current->get_neighbours();
-      int neighborCount = neighbors.GetSize();
+      List<AbstractSubject*>& neighbors = current->get_neighbours();
+      int neighborCount = neighbors.size();
       
       for (int i = 0; i < neighborCount; i++) {
         AbstractSubject* neighbor = neighbors.Get(i);
@@ -71,7 +71,7 @@ int* Game::calculateDistances() {
         if (neighborIndex != -1) {
           // Check if this region was visited in the game
           bool visitedInGame = false;
-          int visitedCount = Visited.GetSize();
+          int visitedCount = Visited.size();
           
           for (int j = 0; j < visitedCount && !visitedInGame; j++) {
             if (Visited.Get(j) == neighbor) {
@@ -103,10 +103,11 @@ int* Game::calculateDistances() {
 
 
 
-Game::Game(int NumberOfSubjects, List<AbstractSubject*> Subjects): NumberOfSubjects(NumberOfSubjects), Subjects(Subjects), StartPosition(0), Position(0), FinalPosition(0), Turn(0), Mistakes(0), GameFinished(false) {
+Game::Game(int NumberOfSubjects, List<AbstractSubject*>& Subjects) : 
+  NumberOfSubjects(NumberOfSubjects), Subjects(Subjects), StartPosition(0), Position(0), FinalPosition(0), Turn(0), Mistakes(0), GameFinished(false) {
   srand(time(0));
   
-  if (NumberOfSubjects <= 0 || Subjects.GetSize() == 0) {
+  if (NumberOfSubjects <= 0 || Subjects.size() == 0) {
     return;
   }
   
@@ -142,12 +143,12 @@ int Game::makePlayerMove(String destination) {
   
   // Find subject with given name
   AbstractSubject* destSubject = 0;
-  for (int i = 0; i < Subjects.GetSize(); i++) {
+  for (int i = 0; i < Subjects.size(); i++) {
     AbstractSubject* subject = Subjects.Get(i);
     List<String>& names = subject->get_names();
     
     // Check all names for this region (some regions may have multiple names)
-    for (int j = 0; j < names.GetSize(); j++) {
+    for (int j = 0; j < names.size(); j++) {
       if (names.Get(j) == destination) {
         destSubject = subject;
         break;
@@ -167,8 +168,8 @@ int Game::makePlayerMove(String destination) {
   
   // Check if region is a neighbor
   bool isNeighbor = false;
-  List<AbstractSubject*> neighbors = Position->get_neighbours();
-  int neighborCount = neighbors.GetSize();
+  List<AbstractSubject*>& neighbors = Position->get_neighbours();
+  int neighborCount = neighbors.size();
   
   for (int i = 0; i < neighborCount; i++) {
     if (neighbors.Get(i) == destSubject) {
@@ -178,7 +179,7 @@ int Game::makePlayerMove(String destination) {
   }
   
   bool wasVisited = false;
-  int visitedCount = Visited.GetSize();
+  int visitedCount = Visited.size();
   for (int i = 0; i < visitedCount; i++) {
     if (Visited.Get(i) == destSubject) {
       wasVisited = true;
@@ -243,8 +244,8 @@ int Game::makeComputerMove() {
   }
   
   // Check if computer can win immediately
-  List<AbstractSubject*> neighbors = Position->get_neighbours();
-  int neighborCount = neighbors.GetSize();
+  List<AbstractSubject*>& neighbors = Position->get_neighbours();
+  int neighborCount = neighbors.size();
   
   bool computerWonImmediately = false;
   for (int i = 0; i < neighborCount && !computerWonImmediately; i++) {
@@ -252,7 +253,7 @@ int Game::makeComputerMove() {
     if (neighbor == FinalPosition) {
       // Check if final position is already visited
       bool wasVisited = false;
-      int visitedCount = Visited.GetSize();
+      int visitedCount = Visited.size();
       
       for (int j = 0; j < visitedCount && !wasVisited; j++) {
         if (Visited.Get(j) == FinalPosition) {
@@ -288,7 +289,7 @@ int Game::makeComputerMove() {
     
     // Check if region was visited
     bool wasVisited = false;
-    int visitedCount = Visited.GetSize();
+    int visitedCount = Visited.size();
     for (int j = 0; j < visitedCount && !wasVisited; j++) {
       if (Visited.Get(j) == neighbor) {
         wasVisited = true;
@@ -372,7 +373,7 @@ int Game::makeComputerMove() {
 
 
 String Game::getCurrentRegionName() const {
-  if (!Position || Position->get_names().GetSize() == 0) {
+  if (!Position || Position->get_names().size() == 0) {
     return String("");
   }
   return Position->get_names().Get(0);
@@ -380,7 +381,7 @@ String Game::getCurrentRegionName() const {
 
 
 String Game::getStartRegionName() const {
-  if (!StartPosition || StartPosition->get_names().GetSize() == 0) {
+  if (!StartPosition || StartPosition->get_names().size() == 0) {
     return String("");
   }
   return StartPosition->get_names().Get(0);
@@ -388,7 +389,7 @@ String Game::getStartRegionName() const {
 
 
 String Game::getFinalRegionName() const {
-  if (!FinalPosition || FinalPosition->get_names().GetSize() == 0) {
+  if (!FinalPosition || FinalPosition->get_names().size() == 0) {
     return String("");
   }
   return FinalPosition->get_names().Get(0);
@@ -399,11 +400,11 @@ List<String> Game::getNeighborRegionNames() const {
   List<String> result;
   if (!Position) return result;
   
-  List<AbstractSubject*> neighbors = Position->get_neighbours();
-  int count = neighbors.GetSize();
+  List<AbstractSubject*>& neighbors = Position->get_neighbours();
+  int count = neighbors.size();
   for (int i = 0; i < count; i++) {
     AbstractSubject* neighbor = neighbors.Get(i);
-    if (neighbor->get_names().GetSize() > 0) {
+    if (neighbor->get_names().size() > 0) {
       result.Add(neighbor->get_names().Get(0));
     }
   }
@@ -413,10 +414,10 @@ List<String> Game::getNeighborRegionNames() const {
 
 List<String> Game::getVisitedRegionNames() const {
   List<String> result;
-  int count = Visited.GetSize();
+  int count = Visited.size();
   for (int i = 0; i < count; i++) {
     AbstractSubject* visited = Visited.Get(i);
-    if (visited->get_names().GetSize() > 0) {
+    if (visited->get_names().size() > 0) {
       result.Add(visited->get_names().Get(0));
     }
   }
@@ -466,7 +467,7 @@ void Game::reset() {
   FinalPosition = Subjects.Get(finalIndex);
   
   // Clear visited lists
-  Visited.Clear();
+  Visited.clear();
   Visited.Add(Position);
   
   // Reset all subjects' visited flags
@@ -489,8 +490,8 @@ bool Game::isRegionReachable(String regionName) const {
   if (!Position || GameFinished || Turn != 0) return false;
   
   // Get current neighbors
-  List<AbstractSubject*> neighbors = Position->get_neighbours();
-  int neighborCount = neighbors.GetSize();
+  List<AbstractSubject*>& neighbors = Position->get_neighbours();
+  int neighborCount = neighbors.size();
   
   for (int i = 0; i < neighborCount; i++) {
     AbstractSubject* neighbor = neighbors.Get(i);
@@ -498,7 +499,7 @@ bool Game::isRegionReachable(String regionName) const {
     
     // Check all names for this region
     bool nameFound = false;
-    for (int j = 0; j < names.GetSize() && !nameFound; j++) {
+    for (int j = 0; j < names.size() && !nameFound; j++) {
       if (names.Get(j) == regionName) {
         nameFound = true;
       }
@@ -508,7 +509,7 @@ bool Game::isRegionReachable(String regionName) const {
     if (nameFound) {
       // Check if not visited
       bool wasVisited = false;
-      int visitedCount = Visited.GetSize();
+      int visitedCount = Visited.size();
       
       for (int k = 0; k < visitedCount && !wasVisited; k++) {
         if (Visited.Get(k) == neighbor) {

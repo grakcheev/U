@@ -1,5 +1,6 @@
 #include "player_window.h"
 #include "ui_player_window.h"
+
 #include <QMessageBox>
 #include <QCompleter>
 #include <QFocusEvent>
@@ -12,7 +13,8 @@ PlayerWindow::PlayerWindow(QWidget *parent)
     , map(nullptr)
     , computerTimer(new QTimer(this))
     , isComputerMoving(false)
-    , jsonFilePath("regions.json")
+    , jsonFilePathRegions("data/new_ruusia (1).json")
+    , jsonFilePathNeighbours("russia_neighbours.json")
 {
     ui->setupUi(this);
     
@@ -52,12 +54,12 @@ void PlayerWindow::initGame()
 {
     // map creation
     map = new Map();
-    map->get_from_JSON(jsonFilePath);
+    map->get_from_JSON(jsonFilePathRegions, jsonFilePathNeighbours);
     
 
-    List<AbstractSubject*> subjects = map->get_subjects();
+    List<AbstractSubject*>& subjects = map->get_subjects();
     
-    game = new Game(subjects.GetSize(), subjects);
+    game = new Game(subjects.size(), subjects);
 }
 
 
@@ -88,10 +90,10 @@ void PlayerWindow::updateUI()
     
     
     List<String> visited = game->getVisitedRegionNames();
-    if (visited.GetSize() > 0) {
+    if (visited.size() > 0) {
         ui->gameInfoText->append("Путь:");
         QString path;
-        for (int i = 0; i < visited.GetSize(); i++) {
+        for (int i = 0; i < visited.size(); i++) {
             if (i > 0) path += " → ";
             path += QString::fromStdString(visited.Get(i).c_str());
         }
@@ -272,8 +274,8 @@ void PlayerWindow::handleGameResult(int result)
     if (reply == QMessageBox::Yes) {
         // restart
         delete game;
-        List<AbstractSubject*> subjects = map->get_subjects();
-        game = new Game(subjects.GetSize(), subjects);
+        List<AbstractSubject*>& subjects = map->get_subjects();
+        game = new Game(subjects.size(), subjects);
         updateUI();
     }
 }
@@ -285,11 +287,11 @@ QStringList PlayerWindow::getAllRegionNames() const
     
     if (!map) return regionNames;
     
-    List<AbstractSubject*> subjects = map->get_subjects();
-    for (int i = 0; i < subjects.GetSize(); i++) {
+    List<AbstractSubject*>& subjects = map->get_subjects();
+    for (int i = 0; i < subjects.size(); i++) {
         AbstractSubject* subject = subjects.Get(i);
         List<String>& names = subject->get_names();
-        for (int j = 0; j < names.GetSize(); j++) {
+        for (int j = 0; j < names.size(); j++) {
             regionNames << QString::fromStdString(names.Get(j).c_str());
         }
     }

@@ -7,7 +7,7 @@
 class Game {
 private:
     int NumberOfSubjects;
-    List<AbstractSubject*> Subjects;
+    List<AbstractSubject*>& Subjects;
     AbstractSubject* StartPosition;
     AbstractSubject* Position;
     AbstractSubject* FinalPosition;
@@ -17,7 +17,7 @@ private:
     bool GameFinished;
     
 public:
-    Game(int NumberOfSubjects, List<AbstractSubject*> Subjects);
+    Game(int NumberOfSubjects, List<AbstractSubject*>& Subjects);
     ~Game();
     
     int makePlayerMove(String destination);
@@ -32,7 +32,8 @@ public:
     int getTurn() const;
     bool isGameFinished() const;
     int getWinner() const;
-    
+    bool isRegionReachable(String regionName) const;
+
     List<AbstractSubject*> getAllRegions() const;
     void reset();
     

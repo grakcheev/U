@@ -7,8 +7,6 @@ MapWidget::MapWidget(Map* m, QWidget* parent): QWidget(parent), map(m), widgetWi
 }
 
 
-
-
 MapWidget::~MapWidget()
 {
     QMap<AbstractSubject*, CachedSubject*>::iterator it = cache.begin();

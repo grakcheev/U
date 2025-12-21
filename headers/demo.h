@@ -1,28 +1,30 @@
 #pragma once
 
-#include <QPainter>
 #include <QWidget>
+#include <QPainter>
 #include <QPolygonF>
 #include <QMap>
+
 #include "list.h"
 #include "subject.h"
 
 struct CachedSubject {
-    QPolygonF polygon;
-    bool visited = false;
+    List<QPolygonF> polygons;
+    bool visited;
 };
 
 class MapWidget : public QWidget {
     Q_OBJECT
 
     Map* map;
-    QMap<AbstractSubject*, CachedSubject> cache;
+    QMap<AbstractSubject*, CachedSubject*> cache;
 
-    int widgetWidth = 0;
-    int widgetHeight = 0;
-
+    int widgetWidth;
+    int widgetHeight;
+    static double normalizeLongitude360(double lon);
 public:
     explicit MapWidget(Map* m, QWidget* parent = nullptr);
+    ~MapWidget();
 
     void rebuildCache();
 

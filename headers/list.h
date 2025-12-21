@@ -18,7 +18,7 @@ public:
     List(const List&) = delete;
     List(List&& other): head(other.head), size_(other.size_){
         other.head = nullptr;
-        other.size = 0;
+        other.size_ = 0;
     }
     List& operator=(const List&) = delete;
 
@@ -38,10 +38,10 @@ public:
         Iterator(const List<X> *lst){
             cur_node = lst->head;
         }
-        X next(){
+        X& next(){
             if (!cur_node)
                 throw EndOfIterator();
-            X val = cur_node->value;
+            X& val = cur_node->value;
             cur_node = cur_node->next;
             return val;
         }

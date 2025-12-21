@@ -20,7 +20,7 @@ class AbstractSubject {
 protected:
     List<String> names;
     List<AbstractSubject*> neighbours;
-    List<Coordinates> border;
+    List<Polygon*> border;
     bool is_visited_;
 public:
     AbstractSubject():neighbours(), border(), names(), is_visited_(false){};
@@ -31,7 +31,7 @@ public:
     void visit(){ is_visited_ = true; }
     List<String>& get_names(){ return names; }
     List<AbstractSubject*>& get_neighbours(){ return neighbours;}
-    List<Coordinates>& get_border(){ return border; };
+    List<Polygon*>& get_border(){ return border; };
     bool is_visited() {return is_visited_; };
 };
 
@@ -41,6 +41,7 @@ class SubjectRussia: public AbstractSubject{
 
 class Map{
    List <AbstractSubject*> subject_list;
+   static AbstractSubject* find_subject_by_name(List<AbstractSubject*>& lst, const String& name);
 public:
     void get_from_JSON(String, String);
     bool is_neighbours(String, String);
